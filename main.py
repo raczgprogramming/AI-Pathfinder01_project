@@ -1,7 +1,7 @@
 import numpy as np
 from datetime import datetime
 
-nameversion = "Pathfinder1_V1.0.1.0"
+nameversion = "Pathfinder1_V1.0.1.1"
 print(f"Name and version: {nameversion}")
 
 now1 = datetime.now()
@@ -100,10 +100,10 @@ def q_learning():
                 for row in states:
                     rownumber += 1
                     log.write(f"Step{rownumber}/{step_counter} - {row}, Ep{episode}\n")
-                log.write(f'Episode {episode} completed in {step_counter} steps with total reward: {total_reward}\n')
+                log.write(f'Episode {episode} completed in {step_counter} steps with total reward: {total_reward}\n\n')
         
         with open(f'{nameversion}-{nowstrf}-episode_rewards_log.txt', "a") as alog: 
-            alog.write(f'Episode {episode} completed in {step_counter} steps with total reward: {total_reward}\n\n')
-            alog.write(f'Q-Learning paramether: Alpha: {alpha}, Gamma: {gamma}, Epsilon: {epsilon}\n')
+            alog.write(f'Episode {episode} completed in {step_counter} steps with total reward: {total_reward}\n')
+            alog.write(f'Q-Learning paramether: Alpha: {alpha}, Gamma: {gamma}, Epsilon: {epsilon}\n\n')
 
 q_learning()
