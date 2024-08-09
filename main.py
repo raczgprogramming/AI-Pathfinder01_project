@@ -1,6 +1,9 @@
 import numpy as np
 from datetime import datetime
 
+nameversion = "Pathfinder1_V1.0.1.0"
+print(f"Name and version: {nameversion}")
+
 now1 = datetime.now()
 formatter = "%Y%m%d-%H%M%S"
 nowstrf = now1.strftime(formatter)
@@ -91,14 +94,16 @@ def q_learning():
                 
         print(f"Episode {episode} completed in {step_counter} steps with total reward: {total_reward}")
         if episode == 0 or episode % 9 == 0:
-            with open(f'{nowstrf}-episodes_and_steps_log.txt', "a") as log:
+            with open(f'{nameversion}-{nowstrf}-episodes_and_steps_log.txt', "a") as log:
                 rownumber = 0
+                log.write(f'Q-Learning paramether in EP{episode}: Alpha: {alpha}, Gamma: {gamma}, Epsilon: {epsilon}\n')
                 for row in states:
                     rownumber += 1
                     log.write(f"Step{rownumber}/{step_counter} - {row}, Ep{episode}\n")
                 log.write(f'Episode {episode} completed in {step_counter} steps with total reward: {total_reward}\n')
         
-        with open(f'{nowstrf}-episode_rewards_log.txt', "a") as alog: 
-            alog.write(f'Episode {episode} completed in {step_counter} steps with total reward: {total_reward}\n')
+        with open(f'{nameversion}-{nowstrf}-episode_rewards_log.txt', "a") as alog: 
+            alog.write(f'Episode {episode} completed in {step_counter} steps with total reward: {total_reward}\n\n')
+            alog.write(f'Q-Learning paramether: Alpha: {alpha}, Gamma: {gamma}, Epsilon: {epsilon}\n')
 
 q_learning()
