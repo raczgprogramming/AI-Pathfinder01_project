@@ -1,5 +1,6 @@
 import numpy as np
 from datetime import datetime
+import AIs
 
 nameversion = "Pathfinder1_V1.1.0.0-SubV"
 print(f"Name and version: {nameversion}")
@@ -33,11 +34,11 @@ def get_neighbors(position):
     return neighbors
 
 #Q-learning paraméter
-alpha = 0.1 #tanulási ráta
-gamma = 0.9 #diszkont faktor
-epsilon = 0.9 #kezdeti felfedezés/exploitáció arány
-epsilon_decay = 0.995 #epsilon csökkentési arány minden epizód után
-epsilon_min = 0.01 #minimum epsilon érték
+alpha = AIs.al.alpha #tanulási ráta
+gamma = AIs.al.gamma #diszkont faktor
+epsilon = AIs.al.epsilon #kezdeti felfedezés/exploitáció arány
+epsilon_decay = AIs.al.epsilon_decay #epsilon csökkentési arány minden epizód után
+epsilon_min = AIs.al.epsilon_min #minimum epsilon érték
 
 #Q-tábla inicializálása
 Q = np.zeros((grid_size, grid_size, 4))
