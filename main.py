@@ -1,7 +1,7 @@
 import numpy as np
 from datetime import datetime
 
-nameversion = "Pathfinder1_V1.0.1.1"
+nameversion = "Pathfinder1_V1.1.0.0-SubV"
 print(f"Name and version: {nameversion}")
 
 now1 = datetime.now()
@@ -35,7 +35,9 @@ def get_neighbors(position):
 #Q-learning paraméter
 alpha = 0.1 #tanulási ráta
 gamma = 0.9 #diszkont faktor
-epsilon = 0.1 #felfedezés/exploitáció arány
+epsilon = 0.9 #kezdeti felfedezés/exploitáció arány
+epsilon_decay = 0.995 #epsilon csökkentési arány minden epizód után
+epsilon_min = 0.01 #minimum epsilon érték
 
 #Q-tábla inicializálása
 Q = np.zeros((grid_size, grid_size, 4))
@@ -67,12 +69,13 @@ def choose_action(state):
 
 #Q-learning algoritmus futtatása
 def q_learning():
+    global epsilon
     for episode in range(1000): #epizódok száma
         state = start
         total_reward = 0
         step_counter = 0
         states = []
-        while state != goal:
+        while state != goal and step_counter <=1000:
             action = choose_action(state)
             new_state = move(state, action)
             if new_state not in path:
@@ -90,8 +93,9 @@ def q_learning():
             #with open(f'episode_log{episode}.txt', "a") as log:
             #    log.write(f'{new_state}\n')
             step_counter += 1
+            if step_counter == 1001:
+                reward =-5000
 
-                
         print(f"Episode {episode} completed in {step_counter} steps with total reward: {total_reward}")
         if episode == 0 or episode % 9 == 0:
             with open(f'{nameversion}-{nowstrf}-episodes_and_steps_log.txt', "a") as log:
@@ -105,5 +109,8 @@ def q_learning():
         with open(f'{nameversion}-{nowstrf}-episode_rewards_log.txt', "a") as alog: 
             alog.write(f'Episode {episode} completed in {step_counter} steps with total reward: {total_reward}\n')
             alog.write(f'Q-Learning paramether: Alpha: {alpha}, Gamma: {gamma}, Epsilon: {epsilon}\n\n')
+
+        if epsilon > epsilon_min:
+            epsilon *=epsilon_decay
 
 q_learning()
